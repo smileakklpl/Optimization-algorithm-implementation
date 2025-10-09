@@ -3,7 +3,6 @@ import numpy as np
 def random_optimization(objective_func, bounds, dim, max_iter):
     """
     實作基本隨機優化 (Primitive RO) 演算法。
-    此實作基於課程簡報 (introducction.pdf) 第 6 頁的偽代碼。
 
     Args:
         objective_func (callable): 要最小化的目標函數。

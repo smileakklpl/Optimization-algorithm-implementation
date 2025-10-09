@@ -3,7 +3,6 @@ import numpy as np
 def whale_optimization_algorithm(objective_func, bounds, dim, population_size, max_iter):
     """
     實作鯨魚優化演算法 (Whale Optimization Algorithm, WOA)。
-    此實作基於課程簡報 (introducction.pdf) 第 24 頁的偽代碼。
 
     Args:
         objective_func (callable): 要最小化的目標函數。

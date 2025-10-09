@@ -3,7 +3,6 @@ import numpy as np
 def particle_swarm_optimization(objective_func, bounds, dim, swarm_size, max_iter, w=0.8, c_p=2.0, c_g=2.0):
     """
     實作粒子群優化 (Particle Swarm Optimization, PSO) 演算法。
-    此實作基於課程簡報 (introducction.pdf) 第 11 和 13 頁的偽代碼。
 
     Args:
         objective_func (callable): 要最小化的目標函數。
