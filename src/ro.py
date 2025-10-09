@@ -55,7 +55,6 @@ def random_optimization(objective_func, bounds, dim, max_iter):
 def improved_random_optimization(objective_func, bounds, dim, max_iter):
     """
     實作改良式隨機優化 (Improved RO) 演算法。
-    此實作基於課程簡報 (introducction.pdf) 第 7 頁的偽代碼。
 
     Args:
         objective_func (callable): 要最小化的目標函數。
