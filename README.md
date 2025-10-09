@@ -39,7 +39,7 @@ Implement four optimization algorithms
     conda create -n myenv python=3.9  
     conda activate myenv  
 3. 安裝所需套件：
-   在檔案目錄下執行:
+   在檔案目錄下執行:  
    pip install -e .  
-4. 執行主程式：
+4. 執行主程式：  
    python main.py  
