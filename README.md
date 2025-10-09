@@ -1,7 +1,8 @@
 # Optimization-algorithm-implementation
 Implement four optimization algorithms
 
-使用四種演算法來尋找三個已知測試函數的最小值，並將結果進行比較與分析
+使用四種演算法來尋找三個已知測試函數的最小值，並將結果進行比較與分析。
+
 
 ## 簡介
 演算法包括：
@@ -14,6 +15,14 @@ Implement four optimization algorithms
 - Rastrigin 函數
 - Rosenbrock 函數
 - Sphere 函數
+
+## 實作方式
+1. 繪製測試函數圖形  
+針對三個函數在維度D=2時，繪製出各自的3D立體圖與等高線圖。
+2. 實作並執行4種演算法  
+尋找三個函數在維度 D=2、10、30 時的最小值 。演算法的疊代次數和粒子數量需根據維度大小做對應調整 
+3. 
+   
 
 ## 檔案介紹
 - pyproject: Python 專案設定檔
