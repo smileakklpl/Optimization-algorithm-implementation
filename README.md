@@ -32,13 +32,14 @@ Implement four optimization algorithms
 ## 使用說明
 1. 安裝 Python 3.9 以上版本。
 2. 創建虛擬環境
-    python -m venv venv
-    source venv/bin/activate  # Linux 或 macOS
-    venv\Scripts\activate     # Windows
-    或是選用conda
-    conda create -n myenv python=3.9
-    conda activate myenv
+    \\python -m venv venv
+    \\source venv/bin/activate  # Linux 或 macOS
+    \\venv\Scripts\activate     # Windows
+    \\或是選用conda
+    \\conda create -n myenv python=3.9
+    \\conda activate myenv
 3. 安裝所需套件：
-   在檔案目錄下執行:pip install -e .
+   在檔案目錄下執行:
+   \\pip install -e .
 4. 執行主程式：
-   python main.py
+   \\python main.py
