@@ -20,10 +20,12 @@ Implement four optimization algorithms
 1. 繪製測試函數圖形  
 針對三個函數在維度D=2時，繪製出各自的3D立體圖與等高線圖。
 2. 實作並執行4種演算法  
-尋找三個函數在維度 D=2、10、30 時的最小值。演算法的疊代次數N_t和粒子數量N_swarm需根據維度大小做對應調整，條件如下:  
+尋找三個函數在維度 D=2、10、30 時的最小值。演算法的疊代次數N_t和粒子數量N_swarm需根據維度大小做對應調整，條件如下:
+```bash
 when D=2,  then N_t=300  and N_swarm=10  
 when D=10, then N_t=1500 and N_swarm=30  
-when D=30, then N_t=3000 and N_swarm=70  
+when D=30, then N_t=3000 and N_swarm=70
+```
 3. 呈現結果
 - 統計數據：  
   將每項實驗重複 15 次，並計算出最好、平均、最差、標準差四個數值，整理成一個表格 。  
@@ -32,7 +34,6 @@ when D=30, then N_t=3000 and N_swarm=70
    
 ## 檔案介紹
 - pyproject: Python 專案設定檔
-- README.md: 專案說明文件
 - src/ro.py: 隨機優化演算法(RO) 
 - src/iro.py: 改良版隨機優化演算法(IRO) 
 - src/pso.py: 粒子群優化演算法(PSO) 
@@ -46,15 +47,23 @@ when D=30, then N_t=3000 and N_swarm=70
 
 ## 使用說明
 1. 安裝 Python 3.9 以上版本。
-2. 創建虛擬環境
+2. 創建虛擬環境  
+   ```bash
     python -m venv venv  
-    source venv/bin/activate  # Linux 或 macOS  
-    venv\Scripts\activate     # Windows  
+    source .venv/bin/activate  # Linux 或 macOS  
+    .venv\Scripts\activate     # Windows
+   ```
     或是選用conda  
+   ```bash
     conda create -n myenv python=3.9  
-    conda activate myenv  
+    conda activate myenv
+   ```
 3. 安裝所需套件：
-   在檔案目錄下執行:  
-   pip install -e .  
-4. 執行主程式：  
+   在檔案目錄下執行:
+   ```bash
+   pip install -e .
+   ```
+4. 執行主程式：
+   ```bash
    python main.py  
+   ```
