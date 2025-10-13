@@ -1,53 +1,44 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-
-# 假設此腳本是從專案根目錄執行的
-# 例如: python src/visualize.py
 from functions import rosenbrock, rastrigin, griewank
 
-def plot_function_3d(func, x_range, y_range, title, num_points=150):
+def plot_function_3d(func, x_range, y_range, title, num_points=1000):
     """
-    為給定的函數生成並保存一個三維曲面圖和一個等高線圖。
-
-    Args:
         func (callable): 要繪製的函數，它必須能接受一個二維 numpy 陣列。
         x_range (tuple): x 軸的範圍 (最小值, 最大值)。
         y_range (tuple): y 軸的範圍 (最小值, 最大值)。
         title (str): 圖表的標題。
-        num_points (int): 每個軸上的取樣點數量。
-                          注意：作業要求1000點，但為了快速生成，這裡使用較小的數值。
+        num_points (int): 每個軸上的取樣點數量。。
     """
-    print(f"正在為 {title} 生成圖表...")
+    print(f"正在生成 {title} 的圖表...")
 
-    # 定義輸出的資料夾
+    #將結果儲存到 results/plots 資料夾
     output_dir = 'results/plots'
     
-    # 生成取樣點
-    x = np.linspace(x_range[0], x_range[1], num_points)
-    y = np.linspace(y_range[0], y_range[1], num_points)
-    X, Y = np.meshgrid(x, y)
+    #生成x與y軸的取樣點
+    x1= np.linspace(x_range[0], x_range[1], num_points)
+    x2 = np.linspace(y_range[0], y_range[1], num_points)
 
-    # 計算 Z 值
-    Z = np.zeros_like(X)
+    #計算yk的值
+    yk = [0 for i in range(len(x2))]
     for i in range(num_points):
         for j in range(num_points):
-            Z[i, j] = func(np.array([X[i, j], Y[i, j]]))
+            yk[i, j] = func(np.array([x1[i, j], x2[i, j]]))
 
-    # 創建一個包含兩個子圖的圖形
+    #使用plt繪製3D立體圖和等高線圖
     fig = plt.figure(figsize=(14, 6))
     fig.suptitle(title, fontsize=16)
 
-    # --- 3D 曲面圖 ---
+    #3D立體圖
     ax1 = fig.add_subplot(1, 2, 1, projection='3d')
-    # 使用 rstride 和 cstride 來加快渲染速度
-    ax1.plot_surface(X, Y, Z, cmap='viridis', edgecolor='none', rstride=5, cstride=5)
+    ax1.plot_surface(x1, x2, yk, cmap='viridis', edgecolor='none', rstride=5, cstride=5)
     ax1.set_xlabel('x1')
     ax1.set_ylabel('x2')
     ax1.set_zlabel('f(x)')
     ax1.set_title('3D 曲面圖')
 
-    # --- 等高線圖 ---
+    #等高線圖
     ax2 = fig.add_subplot(1, 2, 2)
     # 對於數值範圍大的函數，使用對數尺度能更好地顯示細節
     try:
