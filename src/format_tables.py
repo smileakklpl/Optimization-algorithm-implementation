@@ -20,11 +20,12 @@ def export_tables_to_excel(csv_path, output_dir):
             subset = df[(df['Function'] == func) & (df['Algorithm'] == algo)]
 
             if not subset.empty:
+                # 根據維度進行排序
+                subset = subset.sort_values(by='Dimension').copy()
                 # 將維度D更改為 "D=..." 格式
-                subset = subset.copy()
                 subset['Dimension'] = 'D=' + subset['Dimension'].astype(str)
                 # 準備資料進行匯出，將 Dimension 設為索引，然後進行轉置
-                output_df = subset[['Dimension', 'Best', 'Mean', 'Worst', 'StdDev']].set_index('Dimension').sort_index().T
+                output_df = subset[['Dimension', 'Best', 'Mean', 'Worst', 'StdDev']].set_index('Dimension').T
 
                 # 定義輸出檔名
                 file_name = f"{func}_{algo}.xlsx"
