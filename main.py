@@ -4,7 +4,8 @@ import csv
 
 # 匯入我們實作的函式與演算法
 from src.functions import rosenbrock, rastrigin, griewank
-from src.ro import random_optimization, improved_random_optimization
+from src.ro import random_optimization
+from src.iro import improved_random_optimization
 from src.pso import particle_swarm_optimization
 from src.woa import whale_optimization_algorithm
 
