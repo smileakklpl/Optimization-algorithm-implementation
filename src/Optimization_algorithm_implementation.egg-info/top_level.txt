@@ -1,7 +1,0 @@
-format_tables
-functions
-plot_results
-pso
-ro
-visualize
-woa

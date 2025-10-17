@@ -3,25 +3,25 @@ import matplotlib.pyplot as plt
 import os
 from functions import rosenbrock, rastrigin, griewank
 
-def plot_function_3d(func, x_range, y_range, title, num_points=1000):
+def plot_function_3d(func, x_range, y_range, title, num_points, output_dir):
     """
-        func (callable): 要繪製的函數，它必須能接受一個二維 numpy 陣列。
-        x_range (tuple): x 軸的範圍 (最小值, 最大值)。
-        y_range (tuple): y 軸的範圍 (最小值, 最大值)。
-        title (str): 圖表的標題。
-        num_points (int): 每個軸上的取樣點數量。。
+        各參數的解釋&資料型態:
+        func (callable): 要繪製的函數，它必須能接受一個二維 numpy 陣列
+        x_range (tuple): x 軸的範圍 (最小值, 最大值)
+        y_range (tuple): y 軸的範圍 (最小值, 最大值)
+        title (str): 圖表的標題
+        num_points (int): 每個軸上的取樣點數量
+        output_dir (str): 圖表儲存的目錄
     """
     print(f"正在生成 {title} 的圖表...")
-
-    #將結果儲存到 results/plots 資料夾
-    output_dir = 'results/plots'
     
     #生成x與y軸的取樣點
-    x1= np.linspace(x_range[0], x_range[1], num_points)
+    x1 = np.linspace(x_range[0], x_range[1], num_points)
     x2 = np.linspace(y_range[0], y_range[1], num_points)
+    x1, x2 = np.meshgrid(x1, x2)
 
     #計算yk的值
-    yk = [0 for i in range(len(x2))]
+    yk = np.zeros_like(x1)
     for i in range(num_points):
         for j in range(num_points):
             yk[i, j] = func(np.array([x1[i, j], x2[i, j]]))
@@ -29,6 +29,9 @@ def plot_function_3d(func, x_range, y_range, title, num_points=1000):
     #使用plt繪製3D立體圖和等高線圖
     fig = plt.figure(figsize=(14, 6))
     fig.suptitle(title, fontsize=16)
+
+    #因plt預設字型不支援中文，故設定字型為YaHei以正確顯示中文標籤
+    plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']
 
     #3D立體圖
     ax1 = fig.add_subplot(1, 2, 1, projection='3d')
@@ -40,16 +43,8 @@ def plot_function_3d(func, x_range, y_range, title, num_points=1000):
 
     #等高線圖
     ax2 = fig.add_subplot(1, 2, 2)
-    # 對於數值範圍大的函數，使用對數尺度能更好地顯示細節
-    try:
-        min_val = max(Z.min(), 1e-6) # 避免 log(0)
-        levels = np.logspace(np.log10(min_val), np.log10(Z.max()), 20)
-        contour = ax2.contourf(X, Y, Z, levels=levels, cmap='viridis')
-        fig.colorbar(contour, ax=ax2, label='f(x) value (log scale)')
-    except ValueError:
-        # 如果 Z 值包含負數或零，則退回線性尺度
-        contour = ax2.contourf(X, Y, Z, 20, cmap='viridis')
-        fig.colorbar(contour, ax=ax2, label='f(x) value')
+    contour = ax2.contourf(x1, x2, yk, 20, cmap='viridis')
+    fig.colorbar(contour, ax=ax2, label='f(x) value')
 
     ax2.set_xlabel('x1')
     ax2.set_ylabel('x2')
@@ -58,51 +53,41 @@ def plot_function_3d(func, x_range, y_range, title, num_points=1000):
 
     # 保存圖形
     plt.tight_layout(rect=[0, 0.03, 1, 0.95])
-    save_path = os.path.join(output_dir, f"{title.lower().replace(' ', '_')}.png")
+    save_path = os.path.join(output_dir, f"{title.replace(' ', '_')}.png")
     plt.savefig(save_path)
     plt.close(fig)
     print(f"圖表已儲存至 {save_path}")
 
 
 if __name__ == "__main__":
-    # 定義要繪製的函數及其屬性
-    functions_to_plot = [
+    functions_to_plot = [ #每個函數的範圍按照題目要求設定
         {
             "func": rosenbrock,
-            "range": (-5, 10),
-            "title": "Rosenbrock Function"
-        },
+            "range": (-5, 10), 
+            "title": "Rosenbrock Function"},
         {
             "func": rastrigin,
             "range": (-5.12, 5.12),
-            "title": "Rastrigin Function"
-        },
+            "title": "Rastrigin Function"},
         {
             "func": griewank,
             "range": (-600, 600),
-            "title": "Griewank Function"
-        }
+            "title": "Griewank Function"}
     ]
     
-    # 如果儲存結果的資料夾不存在，則創建它
-    output_dir = 'results/plots'
+    output_dir = 'results\\plots'
     os.makedirs(output_dir, exist_ok=True)
 
     # 為每個函數生成圖表
     for item in functions_to_plot:
-        plot_range = item["range"]
-        # Griewank 函數的有趣特徵集中在原點附近。
-        # 繪製完整的 [-600, 600] 範圍會使圖形看起來很平坦。
-        # 我們將使用較小的範圍以獲得資訊更豐富的視覺化效果。
-        if item["func"].__name__ == "griewank":
-            plot_range = (-30, 30)
-            print("注意：為 Griewank 函數使用較小的繪圖範圍以顯示原點附近的細節。")
 
         plot_function_3d(
             func=item["func"],
-            x_range=plot_range,
-            y_range=plot_range,
-            title=item["title"]
+            x_range=item["range"],
+            y_range=item["range"],
+            title=item["title"],
+            num_points=1000,
+            output_dir=output_dir
         )
 
-    print("\n所有視覺化圖表都已生成在 'results/plots/' 資料夾中。\n")
+    print("所有函數圖表都已生成在 'results\\plots\\' 資料夾中。\n")
