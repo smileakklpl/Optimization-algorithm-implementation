@@ -1,16 +1,20 @@
 import numpy as np
 
-def random_optimization(objective_func, bounds, dim, max_iter):
-    """
-    各參數的解釋&資料型態:
-    objective_func (callable): 要最小化的目標函數。
-    bounds (tuple): 搜尋空間的邊界 (min_bound, max_bound)。
-    dim (int): 搜尋空間的維度。
-    max_iter (int): 總迭代次數。
+"""
+Random Optimization(RO) 隨機最佳化演算法
 
-    最終輸出:
-    tuple: 包含 (best_solution -> 最佳解, best_fitness -> 最佳解的表現, fitness_history -> 最佳解的表現之歷史紀錄)
-    """
+各參數的解釋&資料型態:
+objective_func (callable): 要最小化的目標函數。
+bounds (tuple): 搜尋空間的邊界 (min_bound, max_bound)。
+dim (int): 搜尋空間的維度。
+max_iter (int): 總迭代次數。
+
+最終輸出:
+tuple: 包含 (best_solution -> 最佳解, best_fitness -> 最佳解的表現, fitness_history -> 最佳解的表現之歷史紀錄)
+"""
+
+def random_optimization(objective_func, bounds, dim, max_iter):
+
     # 步驟 1: 隨機選擇一個初始位置 current_pos_x
     min_bound, max_bound = bounds
     current_pos_x = np.random.uniform(min_bound, max_bound, dim)
