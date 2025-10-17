@@ -17,19 +17,23 @@ def improved_random_optimization(objective_func, bounds, dim, max_iter):
     b = np.zeros(dim)
     current_fitness = objective_func(current_pos_x)
     
-    #用於記錄整個過程中的全域最佳解
+    # 用於記錄整個過程中的全域最佳解
     best_solution = current_pos_x
     best_fitness = current_fitness
     
-    fitness_history = [best_fitness]
+    # 歷史迭代記錄
+    fitness_history = []
+    fitness_history.append(best_fitness)
 
-    for _ in range(max_iter):
+    # 迭代迴圈 (step 2 到 6)
+    for i in range(max_iter):
         # 步驟 2: 取得隨機向量 dx 並評估前進方向
-        sigma = (max_bound - min_bound) * 0.1
+        sigma = (max_bound - min_bound) / 6.0 # 設定標準差為範圍的1/6，因+-3σ涵蓋99.7%的數值
         dx = np.random.normal(0, sigma, dim)
         
         x_forward = current_pos_x + b + dx
-        x_forward = np.clip(x_forward, min_bound, max_bound)
+        # 確保更新後的解在限定範圍內
+        x_forward = np.clip(x_forward, min_bound, max_bound)# 限制在邊界內，必須>=min_boung 且<=max_bound
         fitness_forward = objective_func(x_forward)
 
         # 步驟 3: 檢查前進方向

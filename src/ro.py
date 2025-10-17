@@ -27,13 +27,12 @@ def random_optimization(objective_func, bounds, dim, max_iter):
     # 迭代迴圈 (step 2 到 4)
     for i in range(max_iter):
         # 步驟 2: 取得隨機向量 dx
-        # sigma是一個超參數，這裡設定為搜尋範圍的一部分
         sigma = (max_bound - min_bound) / 6.0 # 設定標準差為範圍的1/6，因+-3σ涵蓋99.7%的數值
         dx = np.random.normal(0, sigma, dim) # 使用numpy的正態分佈產生隨機向量，即步長
         
         candidate_pos = current_pos_x + dx
-        # 確保更新後的解在邊界內
-        candidate_pos = np.clip(candidate_pos, min_bound, max_bound) # 限制在邊界內，必須>=min_boung 且<=max_bound
+        # 確保更新後的解在限定範圍內
+        candidate_pos = np.clip(candidate_pos, min_bound, max_bound) # 限制在範圍內，必須>=min_boung 且<=max_bound
         candidate_fitness = objective_func(candidate_pos)
 
         # 步驟 3: 如果新的解更好，則更新當前位置
