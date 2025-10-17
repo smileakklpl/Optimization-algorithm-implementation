@@ -29,38 +29,38 @@ def improved_random_optimization(objective_func, bounds, dim, max_iter):
     for i in range(max_iter):
         # 步驟 2: 取得隨機向量 dx 並評估前進方向
         sigma = (max_bound - min_bound) / 6.0 # 設定標準差為範圍的1/6，因+-3σ涵蓋99.7%的數值
-        dx = np.random.normal(0, sigma, dim)
+        dx = np.random.normal(0, sigma, dim) # 使用numpy的正態分佈產生隨機向量，即步長
         
         x_forward = current_pos_x + b + dx
         # 確保更新後的解在限定範圍內
-        x_forward = np.clip(x_forward, min_bound, max_bound)# 限制在邊界內，必須>=min_boung 且<=max_bound
+        x_forward = np.clip(x_forward, min_bound, max_bound)# 限制在邊界內，必須>=min_bound 且<=max_bound
         fitness_forward = objective_func(x_forward)
 
-        # 步驟 3: 檢查前進方向
+        # 步驟 3: 檢查判定條件，if符合則goto step6， else 則 goto step4
         if fitness_forward < current_fitness:
             current_pos_x = x_forward
             current_fitness = fitness_forward
-            b = 0.2 * b + 0.4 * dx
+            b = 0.2*b + 0.4*dx
         else:
-            # 步驟 4: 檢查後退方向
+            # 步驟 4: 檢查判定條件，if符合則goto step6， else 則 goto step5
             x_backward = current_pos_x + b - dx
-            x_backward = np.clip(x_backward, min_bound, max_bound)
+            x_backward = np.clip(x_backward, min_bound, max_bound)# 限制在邊界內，必須>=min_bound 且<=max_bound
             fitness_backward = objective_func(x_backward)
             
             if fitness_backward < current_fitness:
                 current_pos_x = x_backward
                 current_fitness = fitness_backward
-                b = b - 0.4 * dx
+                b = b - 0.4*dx
             else:
-                # 步驟 5: 若無改進，則衰減偏置項
-                b = 0.5 * b
+                # 步驟 5: 若無改進，則將偏置項b減半
+                b = 0.5*b
         
-        # 更新全域最佳解
+        # 與過往表現相比，若新的解更好，則更新最佳解位置
         if current_fitness < best_fitness:
             best_solution = current_pos_x
             best_fitness = current_fitness
             
-        # 步驟 6: 檢查停止條件 (由 for 迴圈處理)，並記錄歷史
+        # 步驟 6: 檢查停止條件 (由max_itre控制)，並記錄最佳解的歷史數值
         fitness_history.append(best_fitness)
 
     return best_solution, best_fitness, fitness_history
